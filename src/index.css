@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cormorant+Garamond:ital,wght@1,500&family=DM+Serif+Display&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 33 33% 96%;
+    --foreground: 18 30% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 18 30% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 18 30% 18%;
+
+    --primary: 18 30% 18%;
+    --primary-foreground: 33 33% 96%;
+
+    --secondary: 30 24% 91%;
+    --secondary-foreground: 18 30% 18%;
+
+    --muted: 30 24% 91%;
+    --muted-foreground: 18 22% 45%;
+
+    --accent: 145 27% 39%;
+    --accent-foreground: 0 0% 100%;
+
+    --accent-light: 145 30% 93%;
+
+    --soft: 18 25% 62%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 18 30% 18% / 0.12;
+    --input: 18 30% 18% / 0.12;
+    --ring: 145 27% 39%;
+
+    --radius: 14px;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --font-sans: 'DM Sans', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .border-hairline {
+    border-width: 0.5px;
+  }
+
+  .border-b-hairline {
+    border-bottom-width: 0.5px;
+  }
+
+  .border-t-hairline {
+    border-top-width: 0.5px;
+  }
+}
+
+/* Custom cursor */
+.custom-cursor {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid hsl(145 27% 39%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.08s ease-out, opacity 0.2s;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.custom-cursor.visible {
+  opacity: 1;
+}
+
+/* Pulse animation for status dot */
+@keyframes status-pulse {
+  0% {
+    box-shadow: 0 0 0 0 hsla(145, 27%, 39%, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px hsla(145, 27%, 39%, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 hsla(145, 27%, 39%, 0);
+  }
+}
+
+.status-pulse {
+  animation: status-pulse 2.5s ease-in-out infinite;
+}
+
+/* Wave animation */
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.wave-emoji {
+  display: inline-block;
+  animation: wave 2.5s ease-in-out infinite;
+  animation-delay: 1s;
+  transform-origin: 70% 70%;
+}
+
+/* Shimmer */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer-once {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-once::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, hsla(145, 27%, 39%, 0.06), transparent);
+  animation: shimmer 1.2s ease-in-out 0.5s forwards;
+  pointer-events: none;
+}
+
+/* Hide scrollbar for chip scroll */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   Talkspace cover letter — scoped theme
+   Applied only inside .talkspace-page so the rest of the site is unaffected.
+   Mirrors the Design AI Compass project's color tokens and typography.
+   ========================================================================== */
+.talkspace-page {
+  --background: 170 10% 97%;
+  --foreground: 185 97% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 185 97% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 185 97% 20%;
+  --primary: 185 97% 20%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 145 60% 87%;
+  --secondary-foreground: 185 97% 20%;
+  --muted: 170 15% 92%;
+  --muted-foreground: 185 30% 40%;
+  --accent: 145 60% 77%;
+  --accent-foreground: 185 97% 15%;
+  --border: 170 20% 88%;
+  --input: 170 20% 88%;
+  --ring: 185 97% 20%;
+  --radius: 0.75rem;
+  --ts-mint: 145 60% 77%;
+
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'DM Sans', sans-serif;
+}
+
+.talkspace-page h1,
+.talkspace-page h2,
+.talkspace-page h3 {
+  font-family: 'DM Serif Display', serif;
+}
+
+.talkspace-page .font-serif {
+  font-family: 'DM Serif Display', serif;
+}
+
+.talkspace-page .bg-mint {
+  background-color: hsl(var(--ts-mint));
+}
