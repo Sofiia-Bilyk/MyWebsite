@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -6,9 +7,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Layout from "@/components/Layout";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import CoverLetterTalkspace from "./pages/CoverLetterTalkspace";
-import CoverLetterDedalusLabs from "./pages/CoverLetterDedalusLabs";
-import CoverLetterSharedContextLab from "./pages/CoverLetterSharedContextLab";
+
+const CoverLetterTalkspace = lazy(() => import("./pages/CoverLetterTalkspace"));
+const CoverLetterDedalusLabs = lazy(() => import("./pages/CoverLetterDedalusLabs"));
+const CoverLetterSharedContextLab = lazy(() => import("./pages/CoverLetterSharedContextLab"));
 
 const queryClient = new QueryClient();
 
@@ -23,11 +25,13 @@ function AppRoutes() {
 
   if (isStandalone) {
     return (
-      <Routes location={location} key={location.pathname}>
-        {Object.entries(standalonePages).map(([path, el]) => (
-          <Route key={path} path={path} element={el} />
-        ))}
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes location={location} key={location.pathname}>
+          {Object.entries(standalonePages).map(([path, el]) => (
+            <Route key={path} path={path} element={el} />
+          ))}
+        </Routes>
+      </Suspense>
     );
   }
 
