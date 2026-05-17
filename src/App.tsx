@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 const CoverLetterTalkspace = lazy(() => import("./pages/CoverLetterTalkspace"));
 const CoverLetterDedalusLabs = lazy(() => import("./pages/CoverLetterDedalusLabs"));
 const CoverLetterSharedContextLab = lazy(() => import("./pages/CoverLetterSharedContextLab"));
+const CoverLetterSettle = lazy(() => import("./pages/CoverLetterSettle"));
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ function AppRoutes() {
     "/cover_letter_talkspace_0423": <CoverLetterTalkspace />,
     "/cover_letter_DedalusLabs_0513": <CoverLetterDedalusLabs />,
     "/for_shared_context_lab_0515": <CoverLetterSharedContextLab />,
+    "/for_settle_0517": <CoverLetterSettle />,
   };
   const isStandalone = location.pathname in standalonePages;
 
