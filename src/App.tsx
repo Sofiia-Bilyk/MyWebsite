@@ -17,6 +17,7 @@ const CoverLetterArena = lazy(() => import("./pages/CoverLetterArena"));
 const CoverLetterLaces = lazy(() => import("./pages/CoverLetterLaces"));
 const CoverLetterComet = lazy(() => import("./pages/CoverLetterComet"));
 const CoverLetterKtlystLabs = lazy(() => import("./pages/CoverLetterKtlystLabs"));
+const CoverLetterBleep64 = lazy(() => import("./pages/CoverLetterBleep64"));
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ function AppRoutes() {
     "/for_laces_0518": <CoverLetterLaces />,
     "/for_comet_0518": <CoverLetterComet />,
     "/for_ktlystlabs_0519": <CoverLetterKtlystLabs />,
+    "/for_bleep64_0519": <CoverLetterBleep64 />,
   };
   const isStandalone = location.pathname in standalonePages;
 
