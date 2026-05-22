@@ -74,12 +74,11 @@ export const PROJECTS: Project[] = [
     description:
       "Led development of an internal workplace wellness app, managing a diverse team of 7 from research to launch.",
     fullDescription:
-      "Tech + Psychology = I got obsessed with Product Development 🚀\n\nOver the past few months, I've been working with NTTEast Corporation to build Shiawase🍃 (幸せ, \"happiness\"), a mental health app designed to help prevent workplace burnout. Because one of the best investments a company can make:\n1️⃣ Building a strong team.\n2️⃣ Caring about the wellness of each member, as supported teams think better, build better, and go further together.\n\nHonestly, it was a truly incredible Tech PM experience because, in addition to building a technically sophisticated solution, we faced a cultural challenge:\n🤔 How to avoid social stigma regarding mental health in Japan?\n🧐 How to make people feel safe in vulnerable topics?\n\nWe ran the project using Lean methodology, starting with VoC research that gave us our first key insights:\n➡️ Confidentiality comes first as users fear being exposed\n➡️ Frame the app as self-improvement to avoid mental health stigma\n➡️ Interactions should be short and seamless, with the option to expand\n\nBased on these findings, my tech sis Aidana Mustafina and I built the MVP using React, Flask, etc., designed the database architecture, and implemented security principles. It was then used for a second round of feedback with executives from large companies and NTT's Wellness Lounge Team, leading to further iterations.\n\nWe are currently finishing deployment. In just 2 weeks, I'm excited to present our working app and research poster at the Symposium in Tokyo.\n\nA special thanks to Katsuki Hatakeyama and Koushirou Sugiura from NTTEast for the warm welcome and support on each phase!",
+      "Tech + Psychology = I got obsessed with Product Development 🚀\n\nDuring my study abroad in Tokyo, I worked at NTT East Japan as a Technical Product Manager for a seven-person team, where we shipped a full-stack workplace wellness application end-to-end. Shiawase (幸せ, \"happiness\") is designed to help prevent burnout in Japanese corporate culture. I led the product from idea to launch, also being a part of the developers team.\n\nFollowing the Lean methodology, we started with customer discovery through VoC research and user interviews, which revealed a core challenge. Beyond building a sophisticated system, we encountered a cultural obstacle: a deep social stigma around the topic of mental health in Japan. I translated those findings into prioritized product requirements that led to specifications for a React 19 + Vite frontend backed by Supabase and Postgres triggers. After shipping the first MVP, we conducted feedback sessions with executives from major Japanese companies and NTT's Wellness Lounge Team, which gave us a different perspective and drove further iteration before launch.\n\nThe creation process was both challenging and fascinating because this is not a personal-use app. It is a corporate application with multiple stakeholders and needs to feel engaging and reliable for employees while also providing meaningful insights to team managers on how to improve overall team efficiency. Our product already serves as an internal corporate resource for over 300,000 users.\n\nYou can check out one of the early prototypes here: https://github.com/Sofiia-Bilyk/Mental-Health-App\n\nA special thanks to Katsuki Hatakeyama and Koushirou Sugiura from NTTEast for the warm welcome and support on each phase!",
     bullets: [
-      "Managed a diverse team of 7 from research to launch",
-      "Analyzed ~15 employee interviews for human-centered requirements",
-      "Built full-stack prototype (React, Flask, DB, Security Principles)",
-      "Presented to NTT East stakeholders for production consideration",
+      "Led a cross-functional team of 7 to develop a corporate wellness platform now used by ~300K users at Japanese corporations, collaborating with stakeholders to prioritize features and translate requirements into tech specifications.",
+      "Conducted user interviews with 15 employees to identify pain points and define human-centered product requirements, driving iterative product improvements through agile development cycles.",
+      "Contributed to a full-stack development using React, PostgreSQL, and Supabase for user auth and data management.",
     ],
     period: "Jan 2026 – Apr 2026",
     tags: ["React", "Flask", "Databases", "SWE", "UI / UX", "VoC Research", "Leadership", "Tech PM"],
@@ -133,18 +132,17 @@ export const PROJECTS: Project[] = [
   {
     id: "4",
     category: "Engineering",
-    position: "RPA Engineer",
+    position: "Junior Data Engineer",
     company: "Hound Line",
     location: "Barcelona, Spain",
     description:
       "Developed RPA systems for businesses and government organizations, achieving ~85–90% automation success rate.",
     fullDescription:
-      "Designed and deployed Robotic Process Automation systems for businesses and government organizations using Python and UiPath. Built database architecture and data pipelines with SQL, SSMS, and Qlik, achieving consistently high automation success rates across diverse client environments.",
+      "I spent two years as a Junior RPA/Data Engineer at Hound Line in Barcelona, where I worked with private and government organizations to automate the parts of their workflows that consumed the most time. After mapping the client's existing workflows and shaping a plan based on expected KPI gains vs time constraints, I built the systems using Python, UiPath, and SQL, with Qlik dashboards for visibility, achieving a ~85–90% process outcome success rate.\n\nMany clients operated in highly regulated industries, including healthcare, legal services, and banking, so rather than replacing entire workflows in one shot, we implemented automation in layers, maintaining strict security protocols along the way. For example, we started with repetitive tasks and then expanded into more complex, time-sensitive, multi-layered processes, which allowed clients to continue operations without interruption and gave us the flexibility to incorporate feedback before moving to the next stage.",
     bullets: [
-      "Developed Robotic Process Automation systems using Python and UiPath",
-      "Achieved ~85–90% automation success rate",
-      "Designed database architecture with SQL and SSMS",
-      "Built data pipelines and dashboards with Qlik",
+      "Developed Robotic Process Automation (RPA) systems for private businesses and governmental organizations using mostly Python and UiPath, achieving a process outcome success rate of ~85-90% by testing and troubleshooting.",
+      "Designed and maintained the architecture for databases, pipelines, and data warehouses using SQL, SSMS, and Qlik for reports and dashboards, ensuring efficient data collection, storage, and optimizing performance (by 10-15%).",
+      "Assisted in daily team and weekly client meetings to improve task management and client relationships.",
     ],
     period: "Jun 2022 – Aug 2024",
     tags: ["Python", "UiPath", "SQL", "Data Pipelines", "Automation"],
@@ -154,7 +152,7 @@ export const PROJECTS: Project[] = [
   {
     id: "5",
     category: "Education",
-    position: "CS Teaching Assistant",
+    position: "Lead Teaching Assistant in Computer Science",
     company: "Minerva University",
     location: "San Francisco, CA",
     description:
@@ -162,9 +160,9 @@ export const PROJECTS: Project[] = [
     fullDescription:
       "Serving as a Computer Science Teaching Assistant, leading weekly Python programming sessions for classes of 15–20 undergraduates. Responsible for preparing and updating curriculum based on data analysis and student feedback, holding office hours, and reporting on session effectiveness to faculty.",
     bullets: [
-      "Leading weekly Python sessions for 15–20 students",
-      "Preparing and updating curriculum based on feedback",
-      "Holding office hours and tracking session effectiveness",
+      "Lead and oversee weekly coding sessions for 20 students, coordinating TAs to ensure smooth instructional delivery.",
+      "Design & iteratively improve curriculum based on student performance data and feedback, optimizing outcomes.",
+      "Hold office hours and prepare weekly effectiveness reports for academic team review and documentation.",
     ],
     period: "Aug 2024 – Present",
     tags: ["Python", "Teaching", "Curriculum Design"],
