@@ -23,6 +23,7 @@ const CoverLetterTikTok = lazy(() => import("./pages/CoverLetterTikTok"));
 const CoverLetterTikTok0522 = lazy(() => import("./pages/CoverLetterTikTok0522"));
 const CoverLetterPPRGHoldings = lazy(() => import("./pages/CoverLetterPPRGHoldings"));
 const CoverLetterStarSling = lazy(() => import("./pages/CoverLetterStarSling"));
+const CoverLetterYieldmo = lazy(() => import("./pages/CoverLetterYieldmo"));
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function AppRoutes() {
     "/for_tiktok_0522": <CoverLetterTikTok0522 />,
     "/for_PPRGHoldings_0522": <CoverLetterPPRGHoldings />,
     "/for_StarSling_0525": <CoverLetterStarSling />,
+    "/for_Yieldmo_0526": <CoverLetterYieldmo />,
   };
   const isStandalone = location.pathname in standalonePages;
 
