@@ -300,15 +300,6 @@ export const POSTS: Post[] = [
     color: "hsl(145 30% 93%)",
     fullStory: "Coming soon — the story behind combining computation with cognition, and why understanding people is as important as understanding code.",
   },
-  {
-    id: "5",
-    tag: "Teaching",
-    title: "Teaching Python: Lessons from Leading 20-Student Sessions",
-    date: "[coming soon]",
-    emoji: "🐍",
-    color: "hsl(18 30% 18% / 0.08)",
-    fullStory: "Coming soon — what I learned about pedagogy, patience, and the art of making complex topics click.",
-  },
 ];
 
 export interface ContactLink {

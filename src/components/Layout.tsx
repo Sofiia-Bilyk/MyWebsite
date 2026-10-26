@@ -3,7 +3,7 @@ import { OWNER } from "@/data/placeholder";
 
 const NAV_ITEMS = [
   { label: "Hello", href: "#hello" },
-  { label: "Projects", href: "#work" },
+  { label: "Projects & Experiences", href: "#work" },
   { label: "Thoughts", href: "#thoughts" },
   { label: "Contact", href: "#contact" },
 ];

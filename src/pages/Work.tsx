@@ -113,7 +113,7 @@ export default function Work() {
   return (
     <div className="max-w-4xl mx-auto pt-8 md:pt-10">
       <h1 className="text-3xl md:text-4xl font-light tracking-[-1px] text-foreground mb-4">
-        Projects
+        Projects &amp; Experiences
       </h1>
 
       {/* Project list */}
