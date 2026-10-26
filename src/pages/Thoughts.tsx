@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
 import { POSTS, Post } from "@/data/placeholder";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -63,10 +62,6 @@ export default function Thoughts() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const getConnectedNodes = (idx: number) =>
-    CONNECTIONS.filter(([a, b]) => a === idx || b === idx)
-      .map(([a, b]) => (a === idx ? b : a));
-
   return (
     <div className="max-w-4xl mx-auto pt-16 md:pt-24">
       <h1 className="text-3xl md:text-4xl font-light tracking-[-1px] text-foreground mb-2">
@@ -100,7 +95,7 @@ export default function Thoughts() {
                 (a === hoveredIdx || b === hoveredIdx);
 
               return (
-                <motion.line
+                <line
                   key={`conn-${i}`}
                   x1={x1}
                   y1={y1}
@@ -110,46 +105,19 @@ export default function Thoughts() {
                   stroke="hsl(var(--accent))"
                   strokeWidth={isHighlighted ? 2 : 1}
                   strokeOpacity={isHighlighted ? 0.6 : 0.15}
-                  initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ delay: 0.3 + i * 0.05, duration: 0.6 }}
                 />
               );
             })}
 
-          {/* Animated pulses along connections */}
-          {dims.w > 0 &&
-            CONNECTIONS.map(([a, b], i) => {
-              const posA = NODE_POSITIONS[a];
-              const posB = NODE_POSITIONS[b];
-              if (!posA || !posB) return null;
-
-              const x1 = (posA.x / 100) * dims.w;
-              const y1 = (posA.y / 100) * dims.h;
-              const x2 = (posB.x / 100) * dims.w;
-              const y2 = (posB.y / 100) * dims.h;
-
-              return (
-                <circle key={`pulse-${i}`} r="2" fill="hsl(var(--accent))" opacity="0.4">
-                  <animateMotion
-                    dur={`${3 + (i % 3)}s`}
-                    repeatCount="indefinite"
-                    path={`M${x1},${y1} L${x2},${y2}`}
-                  />
-                </circle>
-              );
-            })}
         </svg>
 
         {/* Nodes */}
         {POSTS.slice(0, NODE_POSITIONS.length).map((post, i) => {
           const pos = NODE_POSITIONS[i];
           const isHovered = hoveredIdx === i;
-          const isConnected = hoveredIdx !== null && getConnectedNodes(hoveredIdx).includes(i);
-          const isDimmed = hoveredIdx !== null && !isHovered && !isConnected;
 
           return (
-            <motion.div
+            <div
               key={post.id}
               className="absolute cursor-pointer group"
               style={{
@@ -157,59 +125,38 @@ export default function Thoughts() {
                 top: `${pos.y}%`,
                 zIndex: isHovered ? 20 : 10,
               }}
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 + i * 0.1, duration: 0.5, type: "spring" }}
-              onHoverStart={() => setHoveredIdx(i)}
-              onHoverEnd={() => setHoveredIdx(null)}
+              onMouseEnter={() => setHoveredIdx(i)}
+              onMouseLeave={() => setHoveredIdx(null)}
               onClick={() => setSelectedPost(post)}
               data-interactive
             >
-              <motion.div
+              <div
                 className="relative -translate-x-1/2 -translate-y-1/2"
-                animate={{
-                  scale: isHovered ? 1.8 : isConnected ? 1.05 : 1,
-                  opacity: isDimmed ? 0.4 : 1,
-                }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                {/* Glow ring */}
-                <div
-                  className="absolute inset-0 rounded-full transition-all duration-300"
-                  style={{
-                    background: `radial-gradient(circle, hsl(var(--accent) / ${isHovered ? 0.3 : 0.08}) 0%, transparent 70%)`,
-                    transform: "scale(2.5)",
-                  }}
-                />
-
                 {/* Node circle */}
                 <div
-                  className="relative w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center transition-all duration-300 shadow-md"
+                  className="relative w-10 h-10 md:w-12 md:h-12 rounded-full border-2 flex items-center justify-center"
                   style={{
                     backgroundColor: post.color,
                     borderColor: isHovered
                       ? "hsl(var(--accent))"
                       : "hsl(var(--border))",
-                    boxShadow: isHovered
-                      ? "0 0 20px hsl(var(--accent) / 0.3)"
-                      : "0 2px 8px rgba(0,0,0,0.08)",
                   }}
                 >
                   <span className="text-base md:text-lg">{post.emoji}</span>
                 </div>
 
                 {/* Label */}
-                <motion.div
+                <div
                   className="absolute left-1/2 -translate-x-1/2 mt-2 text-center pointer-events-none"
-                  style={{ width: isHovered ? "9rem" : "4.5rem" }}
-                  animate={{ opacity: isHovered ? 1 : 0.5 }}
+                  style={{ width: isMobile ? "5rem" : "9rem" }}
                 >
-                  <p className={`font-medium text-foreground leading-tight ${isHovered ? "text-[9px] md:text-[10px]" : "text-[7px] md:text-[8px] line-clamp-2"}`}>
+                  <p className="font-medium text-foreground leading-tight text-[10px] md:text-xs">
                     {post.title}
                   </p>
-                </motion.div>
-              </motion.div>
-            </motion.div>
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>

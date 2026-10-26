@@ -55,6 +55,7 @@ export interface Project {
   filter: string | string[];
   featured?: boolean;
   chips?: string[];
+  links?: { kind: "github" | "website"; label: string; href: string }[];
   /**
    * Optional path to an image shown at the bottom of the experience detail dialog.
    * Defaults to a city photo when not provided. To swap to a project-specific image,
@@ -67,9 +68,12 @@ export interface Project {
 export const PROJECTS: Project[] = [
   {
     id: "1",
-    category: "Technical Product Manager",
-    position: "Technical Product Manager",
+    category: "SWE & TPM",
+    position: "SWE & TPM",
     company: "NTT East Japan",
+    links: [
+      { kind: "github", label: "NTT wellness app on GitHub", href: "https://github.com/Sofiia-Bilyk/Mental-Health-App" },
+    ],
     location: "Tokyo, Japan",
     description:
       "Led development of an internal workplace wellness app, managing a diverse team of 7 from research to launch.",
@@ -88,8 +92,8 @@ export const PROJECTS: Project[] = [
   },
   {
     id: "2",
-    category: "Technical Project Manager",
-    position: "Technical Project Manager",
+    category: "SWE & TPM",
+    position: "SWE & TPM",
     company: "NASA Space Apps",
     location: "San Francisco, CA",
     description:
@@ -108,6 +112,24 @@ export const PROJECTS: Project[] = [
     featured: true,
     chips: ["Technical Project Management", "Satellite & Geospatial Data", "Data Science & ML"],
   },
+  {
+    "id": "fuego",
+    "category": "Project",
+    "position": "Co-founder",
+    "company": "Fuego.Earth",
+    "links": [{ "kind": "website", "label": "Visit Fuego.Earth", "href": "https://www.fuego.earth/" }],
+    "location": "San Francisco, CA",
+    "description": "We built a browser-based fire spread simulator that lets users choose an ignition point, a day, and a model to explore simulated fire perimeters, with no installation or GIS data preparation. Built on open-source fire science models, this first iteration supports exploration and learning rather than operational decisions, and we welcome feedback from fire behavior analysts and researchers.",
+    "fullDescription": "We built a browser-based fire spread simulator that lets users choose an ignition point, a day, and a model to explore simulated fire perimeters, with no installation or GIS data preparation. Built on open-source fire science models, this first iteration supports exploration and learning rather than operational decisions, and we welcome feedback from fire behavior analysts and researchers.",
+    "bullets": [],
+    "period": "Dec 2025 – present",
+    "tags": [
+        "Wildfire Simulation",
+        "Web Development",
+        "Climate Tech"
+    ],
+    "filter": "tpm"
+},
   {
     id: "3",
     category: "Data & ML",
@@ -150,10 +172,35 @@ export const PROJECTS: Project[] = [
     chips: ["Robotic Process Automation", "Python & SQL", "Full-Stack Development"],
   },
   {
+    "id": "eve-calls",
+    "category": "Work Experience",
+    "position": "Product Manager and Customer Success",
+    "company": "EVE.Calls",
+    "location": "Boston, USA",
+    "description": "Designed and improved conversational AI systems for automated client outreach.",
+    "fullDescription": "Designed a system that combines multiple LLMs (OpenAI, Groq, Mistral) in production, ensembling probability distributions across conversational AI response categories to select the most reliable output, maximizing success rate.\n\nPartnered with a top-5 Ukrainian state-owned bank operations team to translate compliance requirements and internal communication workflows into conversational AI agent logic for an automated client outreach system.\n\nAnalyzed usage logs and product data to diagnose failure patterns and iterate system design, achieving a 95%+ automated resolution rate without human handoff.",
+    "bullets": [
+        "Designed a system that combines multiple LLMs (OpenAI, Groq, Mistral) in production, ensembling probability distributions across conversational AI response categories to select the most reliable output, maximizing success rate.",
+        "Partnered with a top-5 Ukrainian state-owned bank operations team to translate compliance requirements and internal communication workflows into conversational AI agent logic for an automated client outreach system.",
+        "Analyzed usage logs and product data to diagnose failure patterns and iterate system design, achieving a 95%+ automated resolution rate without human handoff."
+    ],
+    "period": "May 2025 – Dec 2025 & May 2026 – Aug 2026",
+    "tags": [
+        "Product Management",
+        "Conversational AI",
+        "LLMs",
+        "Customer Success"
+    ],
+    "filter": "tpm"
+},
+  {
     id: "5",
     category: "Education",
     position: "Lead Teaching Assistant in Computer Science",
     company: "Minerva University",
+    links: [
+      { kind: "website", label: "Minerva University website", href: "https://www.minerva.edu/" },
+    ],
     location: "San Francisco, CA",
     description:
       "Leading weekly Python programming sessions for 15–20 undergraduates.",

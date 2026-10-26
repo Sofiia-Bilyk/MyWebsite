@@ -1,271 +1,90 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { OWNER, EDUCATION, Education } from "@/data/placeholder";
+import { OWNER } from "@/data/placeholder";
 import profilePhoto from "@/assets/profile-photo.jpg";
+import { useId, useRef, useState } from "react";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Work from "./Work";
 import Thoughts from "./Thoughts";
 import Contact from "./Contact";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 
-function PhotoCard() {
+function Introduction() {
   return (
-    <div className="w-[220px] md:w-[220px] rounded-lg overflow-hidden mx-auto md:mx-0">
-      <img
-        src={profilePhoto}
-        alt={OWNER.fullName}
-        width={512}
-        height={640}
-        className="w-full h-auto object-cover rounded-lg"
-      />
-    </div>
+    <>
+      <p className="mb-2">
+        I'm a junior at{" "}
+        <a
+          href="https://www.minerva.edu/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent underline underline-offset-2 hover:opacity-80 transition-opacity"
+        >
+          Minerva University
+        </a>{" "}
+        in San Francisco, CA, studying AI and human behavior.
+      </p>
+      <p className="mx-auto max-w-[320px]">I've studied and lived in the US, Japan, Spain, and Ukraine, which taught me how differently people think, work, and expect technology to behave. I build with that in mind.</p>
+    </>
+  );
+}
+
+function CircleIntroduction() {
+  const section = useRef<HTMLElement>(null);
+  const clipId = useId().replace(/:/g, "");
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: section, offset: ["start start", "end end"] });
+  const [introVisible, setIntroVisible] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    setIntroVisible(progress >= 0.98);
+  });
+  // Final center distance gives approximately 50% overlap by area.
+  const left = useTransform(scrollYProgress, [0, 1], [200, 355]);
+  const right = useTransform(scrollYProgress, [0, 1], [800, 645]);
+  const radius = useTransform(scrollYProgress, [0, 1], [270, 360]);
+  const intersectionOutline = useTransform(scrollYProgress, [0, .12], [0, 1]);
+  return (
+    <section ref={section} className="circle-story" aria-label="Where technology meets people">
+      <div className="circle-story-sticky">
+        <div className="circle-story-art" aria-hidden="true">
+          <svg viewBox="0 0 1000 800" className="circle-story-svg">
+            <defs><clipPath id={clipId}><motion.circle cx={reduce ? 355 : left} cy="400" r={reduce ? 360 : radius} /></clipPath><clipPath id={clipId + "-right"}><motion.circle cx={reduce ? 645 : right} cy="400" r={reduce ? 360 : radius} /></clipPath></defs>
+            <motion.circle cx={reduce ? 355 : left} cy="400" r={reduce ? 360 : radius} fill="#80b5ed" fillOpacity="0.55" />
+            <motion.circle cx={reduce ? 645 : right} cy="400" r={reduce ? 360 : radius} fill="#f5d96b" fillOpacity="0.55" />
+            <motion.circle cx={reduce ? 645 : right} cy="400" r={reduce ? 360 : radius} fill="#a5c98a" fillOpacity="0.72" clipPath={"url(#" + clipId + ")"} />
+            <motion.circle cx={reduce ? 355 : left} cy="400" r={reduce ? 360 : radius} fill="none" stroke="#427eb8" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <motion.circle cx={reduce ? 645 : right} cy="400" r={reduce ? 360 : radius} fill="none" stroke="#c3a031" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <motion.g style={{ opacity: reduce ? 1 : intersectionOutline }} fill="none" stroke="#285c3b" strokeWidth="2">
+              <motion.circle cx={reduce ? 645 : right} cy="400" r={reduce ? 360 : radius} clipPath={"url(#" + clipId + ")"} vectorEffect="non-scaling-stroke" />
+              <motion.circle cx={reduce ? 355 : left} cy="400" r={reduce ? 360 : radius} clipPath={"url(#" + clipId + "-right)"} vectorEffect="non-scaling-stroke" />
+            </motion.g>
+            <motion.g className="circle-story-labels" fill="#233329" textAnchor="middle">
+              <text x="140" y="405">Technology</text><text x="810" y="405">People</text>
+            </motion.g>
+          </svg>
+        </div>
+        <div className="circle-story-intro" hidden={!reduce && !introVisible}>
+          <p className="text-4xl md:text-5xl italic" style={{ fontFamily: "Cormorant Garamond, Georgia, serif" }}>me</p>
+        </div>
+      </div>
+    </section>
   );
 }
 
 export default function Hello() {
-  const [selectedEdu, setSelectedEdu] = useState<Education | null>(null);
-
   return (
     <div>
-      {/* Hello Section */}
-      <section id="hello" className="max-w-4xl mx-auto pt-16 md:pt-24">
-        {/* Hero */}
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-          {/* Text first on mobile, second on desktop */}
-          <div className="flex-1 min-w-0 flex flex-col order-1 md:order-2">
-            <p className="text-muted-foreground text-lg md:text-xl mb-2">
-              <span className="wave-emoji">👋</span> Hey, I'm{" "}
-              <span className="text-accent font-medium text-xl md:text-2xl">{OWNER.fullName}</span>
-            </p>
-            <h1 className="text-4xl md:text-[52px] font-light leading-tight tracking-[-2px] text-foreground mb-4">
-              {OWNER.headline}{" "}
-              <em className="text-accent not-italic" style={{ fontStyle: "italic" }}>
-                {OWNER.headlineHighlight}
-              </em>
-            </h1>
-            <p className="text-muted-foreground text-base leading-[1.8] mb-6 max-w-lg md:block hidden">
-              {OWNER.tagline}
-            </p>
-            <div className="gap-3 md:flex hidden">
-              <a
-                href="#work"
-                data-interactive
-                className="bg-foreground text-primary-foreground px-5 py-2.5 rounded-btn text-sm font-medium hover:opacity-90 transition-opacity"
-              >
-                View my work
-              </a>
-              <a
-                href="#contact"
-                data-interactive
-                className="border-hairline border-border text-foreground px-5 py-2.5 rounded-btn text-sm font-medium hover:bg-secondary transition-colors"
-              >
-                Get in touch
-              </a>
-            </div>
-          </div>
-          {/* Photo second on mobile (smaller), first on desktop */}
-          <div className="shrink-0 order-2 md:order-1 w-full md:w-auto">
-            <PhotoCard />
-          </div>
-          {/* Tagline and CTAs after photo on mobile */}
-          <div className="flex flex-col order-3 md:hidden w-full">
-            <p className="text-muted-foreground text-base leading-[1.8] mb-6 max-w-lg">
-              {OWNER.tagline}
-            </p>
-            <div className="flex gap-3">
-              <a
-                href="#work"
-                data-interactive
-                className="bg-foreground text-primary-foreground px-5 py-2.5 rounded-btn text-sm font-medium hover:opacity-90 transition-opacity"
-              >
-                View my work
-              </a>
-              <a
-                href="#contact"
-                data-interactive
-                className="border-hairline border-border text-foreground px-5 py-2.5 rounded-btn text-sm font-medium hover:bg-secondary transition-colors"
-              >
-                Get in touch
-              </a>
-            </div>
-          </div>
+      <section id="hello" className="portfolio-hero">
+        <img src={profilePhoto} alt={OWNER.fullName} width={512} height={640} className="portfolio-hero-photo" />
+        <div className="portfolio-hero-copy">
+          <p className="portfolio-hero-greeting">👋 Hey, I'm <strong>{OWNER.fullName}</strong></p>
+          <h1 className="portfolio-hero-headline">Building solutions for <em>people.</em></h1>
+          <div className="portfolio-hero-bio"><Introduction /></div>
         </div>
-
-        {/* Education */}
-        <div className="mt-16 md:mt-24">
-          <p className="text-[10px] uppercase tracking-[1.8px] text-muted-foreground mb-6">Education</p>
-          <div className="flex flex-col gap-4">
-            {EDUCATION.map((edu, i) => (
-              <motion.div
-                key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
-                onClick={() => setSelectedEdu(edu)}
-                className="bg-card border-hairline border-border rounded-lg p-6 cursor-pointer group hover:border-accent/40 hover:shadow-[0_4px_20px_-4px_hsla(145,27%,39%,0.12)] transition-all"
-                data-interactive
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-lg font-medium text-foreground mb-1">
-                      {edu.institution}
-                    </h3>
-                    <p className="text-sm text-accent mb-3">{edu.degree}</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs text-soft whitespace-nowrap block">{edu.period}</span>
-                    {edu.location && <span className="text-xs text-soft whitespace-nowrap block">{edu.location}</span>}
-                  </div>
-                </div>
-                {edu.details && (
-                  <ul className="space-y-1.5">
-                    {edu.details.map((detail, j) => {
-                      const [text] = detail.split("||");
-                      return (
-                        <li key={j} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
-                          <span className="text-accent mt-1.5 shrink-0">·</span>
-                          {text}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-                <p className="text-sm text-accent font-medium mt-3">
-                  Click here to learn more
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Education Detail Dialog */}
-        <Dialog open={!!selectedEdu} onOpenChange={(open) => !open && setSelectedEdu(null)}>
-          {selectedEdu && (
-            <DialogContent className="sm:max-w-lg bg-card">
-              <DialogHeader className="text-left">
-                <span className="text-[10px] uppercase tracking-[1.8px] text-accent mb-2 block">
-                  Education
-                </span>
-                <DialogTitle className="text-foreground text-xl mb-1">
-                  <a href="https://www.minerva.edu/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors underline underline-offset-2">
-                    {selectedEdu.institution}
-                  </a>
-                </DialogTitle>
-                <DialogDescription asChild>
-                  <div className="text-muted-foreground">
-                    <div className="space-y-1.5 mt-2 mb-4">
-                      <div className="flex gap-2 text-sm">
-                        <span className="text-soft min-w-[100px]">Degree</span>
-                        <span className="text-foreground">{selectedEdu.degree}</span>
-                      </div>
-                      <div className="flex gap-2 text-sm">
-                        <span className="text-soft min-w-[100px]">Graduation</span>
-                        <span className="text-foreground">May 2028</span>
-                      </div>
-                      <div className="flex gap-2 text-sm">
-                        <span className="text-soft min-w-[100px]">GPA</span>
-                        <span className="text-foreground">3.6 / 4</span>
-                      </div>
-                      {selectedEdu.location && (
-                        <div className="flex gap-2 text-sm">
-                          <span className="text-soft min-w-[100px]">Location</span>
-                          <span className="text-foreground">{selectedEdu.location}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {selectedEdu.details && (
-                      <>
-                        <p className="text-[10px] uppercase tracking-[1.8px] text-accent mb-2">
-                          Details
-                        </p>
-                        <ul className="space-y-1.5">
-                          {selectedEdu.details.map((detail, j) => {
-                            const [text, href] = detail.split("||");
-                            return (
-                              <li key={j} className="text-sm leading-relaxed flex gap-2">
-                                <span className="text-accent mt-0.5 shrink-0">•</span>
-                                {href ? (
-                                  <a href={href} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors underline underline-offset-2">
-                                    {text}
-                                  </a>
-                                ) : text}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </>
-                    )}
-
-                    <p className="text-[10px] uppercase tracking-[1.8px] text-accent mb-2 mt-4">
-                      CS Courses
-                    </p>
-                    <ul className="space-y-1.5">
-                      {[
-                        "Problem Solving with Data Structures and Algorithms",
-                        "Harnessing Artificial Intelligence Algorithms",
-                        "Software Development: Building Powerful Applications",
-                        "Formal Analyses",
-                        "Empirical Analyses",
-                        "Linear Algebra",
-                        "Calculus",
-                      ].map((course, j) => (
-                        <li key={j} className="text-sm leading-relaxed flex gap-2">
-                          <span className="text-accent mt-0.5 shrink-0">•</span>
-                          {course}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <p className="text-[10px] uppercase tracking-[1.8px] text-accent mb-2 mt-4">
-                      SS Courses
-                    </p>
-                    <ul className="space-y-1.5">
-                      {[
-                        "Theory, Research, and Innovation in the Psychological Sciences",
-                        "Psychology: From Neurons to Society",
-                        "Multimodal Communications",
-                        "Modern Economic Thought",
-                        "Complex Systems",
-                      ].map((course, j) => (
-                        <li key={j} className="text-sm leading-relaxed flex gap-2">
-                          <span className="text-accent mt-0.5 shrink-0">•</span>
-                          {course}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <p className="text-[10px] uppercase tracking-[1.8px] text-accent mb-2 mt-4">
-                      Other
-                    </p>
-                    <ul className="space-y-1.5">
-                      {[
-                        "Global Learning",
-                        "Cornerstone Civic Project",
-                        "Special Topics in Japanese Society and Culture",
-                        "Japan Civic Project",
-                        "Human Subjects Research Workshops",
-                        "Teaching Assistant Training",
-                      ].map((course, j) => (
-                        <li key={j} className="text-sm leading-relaxed flex gap-2">
-                          <span className="text-accent mt-0.5 shrink-0">•</span>
-                          {course}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          )}
-        </Dialog>
       </section>
+
+      <CircleIntroduction />
+
+      <div className="circle-story-contact mx-auto max-w-4xl py-8 md:py-12">
+        <Contact />
+      </div>
 
       {/* Work Section */}
       <section id="work" className="scroll-mt-[76px]">
@@ -275,11 +94,6 @@ export default function Hello() {
       {/* Thoughts Section */}
       <section id="thoughts" className="scroll-mt-[76px]">
         <Thoughts />
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="scroll-mt-[76px]">
-        <Contact />
       </section>
 
       {/* Footer */}

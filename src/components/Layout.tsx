@@ -1,57 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { OWNER } from "@/data/placeholder";
 
 const NAV_ITEMS = [
   { label: "Hello", href: "#hello" },
-  { label: "Experiences & Projects", href: "#work" },
+  { label: "Projects", href: "#work" },
   { label: "Thoughts", href: "#thoughts" },
   { label: "Contact", href: "#contact" },
 ];
 
-function CustomCursor() {
-  const cursorRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    if (isTouchDevice) return;
-
-    const cursor = cursorRef.current;
-    if (!cursor) return;
-
-    const move = (e: MouseEvent) => {
-      cursor.style.left = e.clientX + "px";
-      cursor.style.top = e.clientY + "px";
-    };
-
-    const show = () => setVisible(true);
-    const hide = () => setVisible(false);
-
-    document.addEventListener("mousemove", move);
-
-    const addListeners = () => {
-      document.querySelectorAll("a, button, [data-interactive]").forEach((el) => {
-        el.addEventListener("mouseenter", show);
-        el.addEventListener("mouseleave", hide);
-      });
-    };
-
-    addListeners();
-    const observer = new MutationObserver(addListeners);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      document.removeEventListener("mousemove", move);
-      observer.disconnect();
-    };
-  }, []);
-
-  return <div ref={cursorRef} className={`custom-cursor ${visible ? "visible" : ""}`} />;
-}
-
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [dotScale, setDotScale] = useState(1);
   const [activeSection, setActiveSection] = useState("hello");
 
   useEffect(() => {
@@ -79,25 +36,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      el.scrollIntoView({ behavior: "instant" });
     }
   };
 
   return (
     <>
-      <CustomCursor />
       {/* Desktop nav */}
       <nav className="sticky top-0 z-50 h-[60px] border-b-hairline border-border bg-background/95 backdrop-blur-sm hidden md:flex items-center justify-between px-12">
         <button
           className="flex items-center gap-2.5 group"
           onClick={() => scrollTo("#hello")}
-          onMouseEnter={() => setDotScale(1.7)}
-          onMouseLeave={() => setDotScale(1)}
           data-interactive
         >
-          <motion.span
-            animate={{ scale: dotScale }}
-            transition={{ type: "spring", stiffness: 500, damping: 15 }}
+          <span
             className="w-2 h-2 rounded-full bg-accent inline-block"
           />
           <span className="text-sm font-medium text-foreground">{OWNER.fullName}</span>
